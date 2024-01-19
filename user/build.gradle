@@ -1,0 +1,30 @@
+
+buildscript{
+    repositories {
+        mavenCentral()
+        dependencies{
+            classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootVer"
+            classpath "io.spring.gradle:dependency-management-plugin:$springDepMngVer"
+        }
+    }
+}
+
+plugins {
+    id 'com.amdocs.poc.java-conventions'
+}
+
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+dependencies {
+    //implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation "org.axonframework:axon-spring-boot-starter:$axonVer"
+    implementation project(':core')
+}
+
+jar {
+    enabled =false
+}
+
+description = 'user'

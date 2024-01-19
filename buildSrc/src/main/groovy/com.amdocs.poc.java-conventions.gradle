@@ -1,0 +1,50 @@
+
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+}
+
+repositories {
+    if(project.hasProperty('infraBuild')) {
+        /* Infra to set infraBuild and provide actual repoUrl:
+                   "gradle clean build -PinfraBuild -PrepoUrl=file:..." */
+        maven {
+            url (findProperty('repoUrl') ?: 'file:///produser/facoper/andreyz/.m2/repository')
+        }
+    } else {
+        mavenLocal()
+    }
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter:$springBootVer"
+    implementation "com.oracle.jdbc:ojdbc8:$oraJdbcVer"
+    //implementation "com.oracle.ojdbc:ojdbc8:$oraJdbcVer"
+    implementation "com.fasterxml.jackson.core:jackson-core:$jacksonVer"
+    implementation "com.fasterxml.jackson.core:jackson-annotations:$jacksonVer"
+    implementation "com.fasterxml.jackson.core:jackson-databind:$jacksonVer"
+    implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-xml:$jacksonVer"
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVer"
+
+
+    compileOnly "org.projectlombok:lombok:$lombokVer"
+    annotationProcessor "org.projectlombok:lombok:$lombokVer"
+}
+
+group = 'com.amdocs.poc'
+version = '1.0-SNAPSHOT'
+
+java.sourceCompatibility = JavaVersion.VERSION_1_8
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from(components.java)
+        }
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}

@@ -1,0 +1,9 @@
+
+rootProject.name = 'axoniq-saga-java-app'
+include 'core'
+include 'user'
+include 'order'
+include 'payment'
+include 'shipment'
+include 'kafka'
+

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<property name="LOGS" value="${HOME}/work/proj/axoniq-saga-java-app/log"/>
+
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                %d{HH:mm:ss.SSS} [%t] %-5level %logger{36}[:%line] - %msg%n
+            </Pattern>
+        </layout>
+    </appender>
+
+    <appender name="RollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS}/payment.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOGS}/archived/payment.%d{yyyy-MM-dd_HH}.%i.log.gz</fileNamePattern>
+            <!-- each archived file, size max 500MB -->
+            <maxFileSize>500MB</maxFileSize>
+            <!-- total size of all archive files, if total size > 50GB, it will delete old archived file -->
+            <totalSizeCap>50GB</totalSizeCap>
+            <!-- 10 days to keep -->
+            <maxHistory>10</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%d %p %c{1.}[:%line] [%t] - %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Log everything at an INFO level -->
+    <root level="debug">
+        <appender-ref ref="RollingFile"/>
+        <appender-ref ref="Console"/>
+    </root>
+
+    <!-- Log "com.amdocs.ensemble.etl*" at a DEBUG level -->
+    <logger name="com.amdocs.poc.axon.saga" level="debug" additivity="false">
+        <appender-ref ref="RollingFile" />
+        <appender-ref ref="Console" />
+    </logger>
+
+</configuration>

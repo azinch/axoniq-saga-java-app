@@ -1,0 +1,23 @@
+
+buildscript{
+    repositories {
+        mavenCentral()
+        dependencies{
+            classpath "io.spring.gradle:dependency-management-plugin:$springDepMngVer"
+        }
+    }
+}
+
+plugins {
+    id 'com.amdocs.poc.java-conventions'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+dependencies {
+    implementation "org.axonframework:axon-spring-boot-starter:$axonVer"
+}
+
+//version = '2.0-SNAPSHOT'
+
+description = 'core'

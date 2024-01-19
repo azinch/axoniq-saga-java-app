@@ -1,0 +1,30 @@
+
+buildscript{
+    repositories {
+        mavenCentral()
+        dependencies{
+            classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootVer"
+            classpath "io.spring.gradle:dependency-management-plugin:$springDepMngVer"
+        }
+    }
+}
+
+plugins {
+    id 'com.amdocs.poc.java-conventions'
+}
+
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+dependencies {
+    implementation "org.axonframework:axon-spring-boot-starter:$axonVer"
+    implementation "org.axonframework.extensions.kafka:axon-kafka-spring-boot-starter:$axonKafkaExtVer"
+    implementation "org.apache.kafka:kafka-clients:$kafkaVer"
+    implementation project(':core')
+}
+
+jar {
+    enabled =false
+}
+
+description = 'kafka'
